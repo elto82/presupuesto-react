@@ -1,13 +1,15 @@
 import { useState } from "react";
+import Error from "./Error";
 
 const Formulario = () => {
   const [nombre, setNombre] = useState("");
   const [cantidad, setCantidad] = useState(0);
+  const [error, setError] = useState(false);
 
   const handleAdicionarGastos = (e) => {
     e.preventDefault();
-    if (nombre.trim() === "" || cantidad < 1) {
-      alert("Please fill in all fields");
+    if (nombre.trim() === "" || cantidad < 1 || isNaN(cantidad)) {
+      setError(true);
       return;
     }
   };
@@ -16,6 +18,9 @@ const Formulario = () => {
     <>
       <form onSubmit={handleAdicionarGastos}>
         <h2>Add your expenses here</h2>
+        {error ? (
+          <Error mensaje="All fields are required or the budget is incorrect" />
+        ) : null}
         <div className="campo">
           <label>Name of expense</label>
           <input
