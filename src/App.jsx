@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Pregunta from "./components/Pregunta";
 import Formulario from "./components/Formulario";
 import Listado from "./components/Listado";
@@ -9,10 +9,18 @@ const App = () => {
   const [restante, setRestante] = useState(0);
   const [mostrarPregunta, setMostrarPregunta] = useState(true);
   const [gastos, setGastos] = useState([]);
+  const [gasto, setGasto] = useState({});
+  const [crearGasto, setCrearGasto] = useState(false);
 
-  const agregarGasto = (gasto) => {
-    setGastos([...gastos, gasto]);
-  };
+  useEffect(() => {
+    if (crearGasto) {
+      setGastos((gastosActuales) => [...gastosActuales, gasto]);
+      const presupuestoRestante = restante - gasto.cantidad;
+      setRestante(presupuestoRestante);
+    }
+
+    setCrearGasto(false);
+  }, [gasto, crearGasto, restante]);
 
   return (
     <div className="container">
@@ -28,7 +36,7 @@ const App = () => {
           ) : (
             <div className="row">
               <div className="one-half column">
-                <Formulario agregarGasto={agregarGasto} />
+                <Formulario setGasto={setGasto} setCrearGasto={setCrearGasto} />
               </div>
               <div className="one-half column">
                 <Listado gastos={gastos} />

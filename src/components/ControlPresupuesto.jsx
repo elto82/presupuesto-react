@@ -1,10 +1,11 @@
-import React from "react";
-
+import { revisarPresupuesto } from "../helpers/helpers.js";
 const ControlPresupuesto = ({ presupuesto, restante }) => {
   return (
     <>
       <div className="alert alert-primary">budget: ${presupuesto}</div>
-      <div className="alert">remaining: ${restante}</div>
+      <div className={revisarPresupuesto(presupuesto, restante)}>
+        remaining: ${restante}
+      </div>
     </>
   );
 };

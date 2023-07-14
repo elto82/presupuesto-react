@@ -6,7 +6,7 @@ const Listado = ({ gastos }) => {
     <div className="gastos-realizados">
       <h2>Listing </h2>
       {gastos.map((gasto) => (
-        <Gasto gasto={gasto} key={gasto.id} />
+        <Gasto key={gasto.nombre} gasto={gasto} />
       ))}
     </div>
   );
