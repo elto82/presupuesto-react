@@ -1,11 +1,18 @@
 import { useState } from "react";
 import Pregunta from "./components/Pregunta";
 import Formulario from "./components/Formulario";
+import Listado from "./components/Listado";
 
 const App = () => {
   const [presupuesto, setPresupuesto] = useState(0);
-  const [gastos, setGastos] = useState(0);
+  const [restante, setRestante] = useState(0);
   const [mostrarPregunta, setMostrarPregunta] = useState(true);
+  const [gastos, setGastos] = useState([]);
+
+  const agregarGasto = (gasto) => {
+    setGastos([...gastos, gasto]);
+  };
+
   return (
     <div className="container">
       <header>
@@ -14,15 +21,17 @@ const App = () => {
           {mostrarPregunta ? (
             <Pregunta
               setPresupuesto={setPresupuesto}
-              setGastos={setGastos}
+              setRestante={setRestante}
               setMostrarPregunta={setMostrarPregunta}
             />
           ) : (
             <div className="row">
               <div className="one-half column">
-                <Formulario />
+                <Formulario agregarGasto={agregarGasto} />
               </div>
-              <div className="one-half column">2</div>
+              <div className="one-half column">
+                <Listado gastos={gastos} />
+              </div>
             </div>
           )}
         </div>
